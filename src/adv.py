@@ -42,7 +42,7 @@ room['overlook'].s_to = room['foyer']
 room['common_room'].n_to = room['chamber']
 room['chamber'].s_to = room['common_room']
 room['foyer'].e_to = room['common_room']
-room['common_room'].w.to = room['foyer']
+room['common_room'].w_to = room['foyer']
 room['passage'].e_to = room['foyer']
 room['foyer'].w_to = room['passage']
 
@@ -64,3 +64,48 @@ room['foyer'].w_to = room['passage']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player_name = "Luna Lovegood"
+starting_room = room['outside']
+player = Player(player_name, starting_room)
+
+while True:
+    current_room = player.current_room
+
+    print(f"You are now at the {current_room.name}\n, {current_room_description}, \n Which direction would you like to move?")
+
+    cmd = input("Enter 'n', 's', 'e', or 'w' to move or 'q' to quit:")
+
+    if cmd == 'q':
+        print('\n See you again next time \n')
+        break
+
+    elif cmd == 'n':
+        if hasattr(current_room, 'n_to'):
+            print('**********\n Moving North \n**********')
+            player.current_room = current_room.n_to
+        else:
+            print("Uh oh! There isn't an exit to the south! \n \n Try a different direction")
+
+    elif cmd == 'e':
+        if hasattr(current_room, 'e_to'):
+            print('**********\n Moving East \n***********')
+            player.current_room = current_room.e_to
+        else:
+            print("Blocked! \n \n Try a different way.")
+
+    elif cmd == 's':
+        if hasattr(current_room, 's_to'):
+            print ('********** \n Moving South \n *********')
+            player.current_room = current_room.s_to
+        else:
+            print("Do you need glasses? There isn't a door this way! Pick another direction!")
+
+    elif cmd == 'w':
+        if hasattr(current_room, 'w_to'):
+            print ('********** \n Moving West \n *********')
+            player.current_room = current_room.w_to
+        else: print("*sigh* You're really bad at this aren't you? There is no way out this way!")
+
+    if cmd !== 'q' or 'n' or 'e' or 's' or 'w':
+        print("Can you read? I said enter 'n', 's', 'e', 'w', or 'q' \n this wasn't any of those!")
